@@ -10,70 +10,6 @@
                     <file>${reference.OCRServlet-ejb.dist}</file>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.sqljdbc4-3.0.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.tess4j.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.ghost4j-0.5.1.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.jai_imageio.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.jna-4.1.0.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.hadoop-core-1.2.1.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.commons-logging-1.2.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.hadoop-common-2.6.0.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.commons-configuration-1.6.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.commons-lang-2.6.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.jackson-core-asl-1.8.8.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.-Workspaces}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.commons-configuration-1.6.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.commons-lang-2.6.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.ghost4j-0.5.1.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.hadoop-common-2.6.0.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.hadoop-core-1.2.1.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.jackson-core-asl-1.8.8.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.jackson-mapper-asl-1.8.8.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.jai_imageio.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
@@ -92,9 +28,6 @@
                 <library dirs="200">
                     <file>${file.reference.lib-tessdata}</file>
                     <path-in-war>WEB-INF/classes</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.jackson-mapper-asl-1.8.8.jar}</file>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
