@@ -5,13 +5,15 @@
  */
 package OCR;
 
+import java.io.InputStream;
+
 /**
  *
  * @author starktony
  */
 public class ImageDTO {
     String iID, uID, creatorID;
-    byte[] imageBlob, thumbnailBlob;
+    InputStream imageBlob, thumbnailBlob;
     String rawOCRClob, procOCRClob;
 
     public String getCreatorID() {
@@ -46,19 +48,19 @@ public class ImageDTO {
 	this.uID = uID;
     }
 
-    public byte[]  getImageBlob() {
+    public InputStream getImageBlob() {
 	return imageBlob;
     }
 
-    public void setImageBlob(byte[]  imageBlob) {
+    public void setImageBlob(InputStream imageBlob) {
 	this.imageBlob = imageBlob;
     }
 
-    public byte[]  getThumbnailBlob() {
+    public InputStream getThumbnailBlob() {
 	return thumbnailBlob;
     }
 
-    public void setThumbnailBlob(byte[]  thumbnailBlob) {
+    public void setThumbnailBlob(InputStream  thumbnailBlob) {
 	this.thumbnailBlob = thumbnailBlob;
     }
 

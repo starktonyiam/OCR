@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
@@ -67,9 +68,9 @@ public class ImageServlet extends HttpServlet {
 	    switch (postAction) {
 		case "SAVEIMAGE":
 		    Properties thumbnailProperties = new Properties();
-		    
+
 		    try {
-			thumbnailProperties.load(this.getClass().getClassLoader().getResourceAsStream("Thumbnail.properties"));
+			thumbnailProperties.load(this.getClass().getClassLoader().getResourceAsStream("prefs.properties"));
 		    } catch (Exception ex) {
 			Logger.getLogger(ImageServlet.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -79,31 +80,30 @@ public class ImageServlet extends HttpServlet {
 		    Tesseract instance = Tesseract.getInstance();  // JNA Interface Mapping
 		    instance.setDatapath("C:\\Users\\i076631\\Desktop\\OCR\\Tess4J-1.3-src\\Tess4J");
 
-		    BufferedImage imageBI = ImageIO.read(request.getPart("image").getInputStream());
-		    BufferedImage imageBIGray = new BufferedImage(imageBI.getWidth(), imageBI.getHeight(),
-                    BufferedImage.TYPE_BYTE_BINARY);
-
-		    Graphics2D g = imageBIGray.createGraphics();
-		    g.drawImage(imageBI, 0, 0, null);
-	    
+		    InputStream imageIS = request.getPart("image").getInputStream();
+		    BufferedImage imageBI = ImageIO.read(imageIS);
 		    ByteArrayOutputStream imageBAOS = new ByteArrayOutputStream();
 		    ImageIO.write(imageBI, "jpg", imageBAOS);
-
-		    int thumbnailWidth = Integer.parseInt(thumbnailProperties.getProperty("width")),
-		     thumbnailHeight = Integer.parseInt(thumbnailProperties.getProperty("height"));
-
+		    
+		    int thumbnailWidth = Integer.parseInt(thumbnailProperties.getProperty("WIDTH"));
+		    int thumbnailHeight = Integer.parseInt(thumbnailProperties.getProperty("HEIGHT"));
+		    ByteArrayOutputStream thumbnailBAOS = new ByteArrayOutputStream();
 		    BufferedImage thumbnailBI = new BufferedImage(thumbnailWidth, thumbnailHeight, BufferedImage.TYPE_INT_RGB);
 		    thumbnailBI.createGraphics().drawImage(imageBI.getScaledInstance(thumbnailWidth, thumbnailHeight, BufferedImage.SCALE_SMOOTH), 0, 0, null);
-		    ByteArrayOutputStream thumbnailBAOS = new ByteArrayOutputStream();
 		    ImageIO.write(thumbnailBI, "jpg", thumbnailBAOS);
 
+		    BufferedImage imageBIGray = new BufferedImage(imageBI.getWidth(), imageBI.getHeight(),
+			    BufferedImage.TYPE_BYTE_BINARY);
+		    Graphics2D g = imageBIGray.createGraphics();
+		    g.drawImage(imageBI, 0, 0, null);
+		    
 		    imageDTO.setIID(System.currentTimeMillis()
 			    + "(" + request.getParameter("uid") + ")"
 			    + "(" + request.getParameter("cid") + ")");
 		    imageDTO.setUID(request.getParameter("uid"));
 		    imageDTO.setCreatorID(request.getParameter("cid"));
-		    imageDTO.setImageBlob(imageBAOS.toByteArray());
-		    imageDTO.setThumbnailBlob(thumbnailBAOS.toByteArray());
+		    imageDTO.setImageBlob(new ByteArrayInputStream(imageBAOS.toByteArray()));
+		    imageDTO.setThumbnailBlob(new ByteArrayInputStream(thumbnailBAOS.toByteArray()));
 		    imageDTO.setRawOCRClob(instance.doOCR(imageBIGray));
 
 		    returnStatus = imageDAO.saveImage(imageDTO);
@@ -130,7 +130,7 @@ public class ImageServlet extends HttpServlet {
 		    } else {
 			response.setContentType("image/jpeg");
 			outputStream = response.getOutputStream();
-			ImageIO.write(ImageIO.read(new ByteArrayInputStream(imageDTO.getThumbnailBlob())), "jpg", outputStream);
+			ImageIO.write(ImageIO.read(imageDTO.getThumbnailBlob()), "jpg", outputStream);
 			outputStream.close();
 		    }
 		    break;
@@ -144,7 +144,7 @@ public class ImageServlet extends HttpServlet {
 		    } else {
 			response.setContentType("image/jpeg");
 			outputStream = response.getOutputStream();
-			ImageIO.write(ImageIO.read(new ByteArrayInputStream(imageDTO.getImageBlob())), "jpg", outputStream);
+			ImageIO.write(ImageIO.read(imageDTO.getImageBlob()), "jpg", outputStream);
 			outputStream.close();
 		    }
 		    break;
